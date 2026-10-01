@@ -1,516 +1,1512 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Heyu — Personal Space</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background:
-        radial-gradient(circle at 20% 20%, #16213e 0%, transparent 35%),
-        radial-gradient(circle at 80% 30%, #1b2735 0%, transparent 35%),
-        #070707;
-
-    color: white;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* 背景网格 */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-
-    background-size: 50px 50px;
-
-    pointer-events: none;
-}
-
-/* 顶部导航 */
-
-nav {
-    width: 100%;
-    position: fixed;
-    top: 0;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 22px 8%;
-
-    backdrop-filter: blur(18px);
-    background: rgba(0,0,0,0.25);
-
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-
-    z-index: 10;
-}
-
-.logo {
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-nav a {
-    color: #aaa;
-    text-decoration: none;
-    margin-left: 28px;
-
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: white;
-}
-
-/* 首页 */
-
-.hero {
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    padding: 0 10%;
-}
-
-.small-title {
-    color: #888;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-    font-size: clamp(60px, 10vw, 140px);
-    line-height: 0.9;
-
-    letter-spacing: -5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #9da7ff,
-            #ffffff
-        );
-
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-.hero h2 {
-    margin-top: 35px;
-
-    font-size: clamp(20px, 3vw, 34px);
-    font-weight: 400;
-
-    color: #888;
-}
-
-.hero h2 span {
-    color: white;
-}
-
-/* 发光点 */
-
-.glow {
-    position: absolute;
-
-    width: 300px;
-    height: 300px;
-
-    right: 10%;
-    top: 30%;
-
-    background: #5865f2;
-
-    filter: blur(150px);
-
-    opacity: 0.25;
-
-    animation: floating 6s ease-in-out infinite;
-}
-
-@keyframes floating {
-
-    0% {
-        transform: translateY(0px);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070a0f">
+  <meta name="description" content="Heyu 的个人数字实验室：数据库知识、AI 项目、小游戏与持续发生的实验。">
+  <title>Heyu / Digital Lab</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070a0f'/%3E%3Cellipse cx='32' cy='18' rx='18' ry='8' fill='none' stroke='%237af5c8' stroke-width='4'/%3E%3Cpath d='M14 18v28c0 4.4 8.1 8 18 8s18-3.6 18-8V18M14 32c0 4.4 8.1 8 18 8s18-3.6 18-8' fill='none' stroke='%237af5c8' stroke-width='4'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #070a0f;
+      --bg-elevated: #0c1118;
+      --surface: rgba(15, 22, 31, 0.72);
+      --surface-solid: #0f161f;
+      --line: rgba(174, 200, 219, 0.14);
+      --line-strong: rgba(122, 245, 200, 0.34);
+      --text: #edf7f4;
+      --muted: #91a1ad;
+      --accent: #7af5c8;
+      --accent-2: #8db9ff;
+      --warning: #ffc77a;
+      --max: 1180px;
+      --radius: 22px;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
     }
 
-    50% {
-        transform: translateY(-40px);
+    * {
+      box-sizing: border-box;
     }
 
-    100% {
-        transform: translateY(0px);
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
     }
 
-}
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 14% 5%, rgba(56, 124, 139, 0.18), transparent 28rem),
+        radial-gradient(circle at 88% 22%, rgba(71, 89, 161, 0.14), transparent 26rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
 
-/* 内容 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(153, 190, 205, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(153, 190, 205, 0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+    }
 
-section {
-    padding: 120px 10%;
-}
+    ::selection {
+      color: #03120e;
+      background: var(--accent);
+    }
 
-.section-title {
-    font-size: 42px;
-    margin-bottom: 50px;
-}
+    a {
+      color: inherit;
+    }
 
-/* 卡片 */
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.grid {
-    display: grid;
+    button {
+      font: inherit;
+    }
 
-    grid-template-columns:
-        repeat(auto-fit, minmax(250px,1fr));
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 1000;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #05110e;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
 
-    gap: 22px;
-}
+    .skip-link:focus {
+      top: 1rem;
+    }
 
-.card {
-    padding: 30px;
+    .container {
+      width: min(calc(100% - 2.5rem), var(--max));
+      margin-inline: auto;
+    }
 
-    border-radius: 22px;
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      border-bottom: 1px solid transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
 
-    background:
-        rgba(255,255,255,0.04);
+    .site-header.scrolled {
+      border-color: var(--line);
+      background: rgba(7, 10, 15, 0.78);
+      backdrop-filter: blur(18px);
+    }
 
-    border:
-        1px solid rgba(255,255,255,0.08);
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
 
-    backdrop-filter: blur(20px);
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 760;
+      letter-spacing: 0.12em;
+    }
 
-    transition: 0.35s;
-}
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: rgba(122, 245, 200, 0.07);
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.83rem;
+      box-shadow: inset 0 0 18px rgba(122, 245, 200, 0.07);
+    }
 
-.card:hover {
-    transform: translateY(-8px);
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
 
-    background:
-        rgba(255,255,255,0.07);
+    .nav-links a {
+      position: relative;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
 
-    border:
-        1px solid rgba(255,255,255,0.18);
-}
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.45rem;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.2s ease;
+    }
 
-.card .number {
-    color: #666;
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+    }
 
-    font-size: 14px;
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
 
-    margin-bottom: 30px;
-}
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
 
-.card h3 {
-    font-size: 24px;
+    main {
+      display: block;
+    }
 
-    margin-bottom: 12px;
-}
+    .hero {
+      min-height: 100svh;
+      padding: 9rem 0 5rem;
+      display: grid;
+      align-items: center;
+    }
 
-.card p {
-    color: #888;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: clamp(3rem, 7vw, 7rem);
+      align-items: center;
+    }
 
-    line-height: 1.7;
-}
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 0 0 1.35rem;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
 
-/* Now */
+    .signal {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(122, 245, 200, 0.09), 0 0 20px rgba(122, 245, 200, 0.7);
+    }
 
-.now {
-    font-size: 28px;
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
 
-    max-width: 800px;
+    h1 {
+      max-width: 800px;
+      margin-bottom: 1.55rem;
+      font-size: clamp(3.6rem, 8vw, 7.9rem);
+      line-height: 0.92;
+      letter-spacing: -0.072em;
+      font-weight: 780;
+    }
 
-    line-height: 1.6;
+    .outline-word {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(237, 247, 244, 0.38);
+    }
 
-    color: #888;
-}
+    .hero-copy {
+      max-width: 650px;
+      margin-bottom: 2rem;
+      color: #a7b4bd;
+      font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+    }
 
-.now strong {
-    color: white;
-}
+    .hero-copy strong {
+      color: var(--text);
+      font-weight: 600;
+    }
 
-/* footer */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
 
-footer {
-    padding: 70px 10%;
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.025);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
 
-    color: #555;
+    .button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #06130f;
+      font-weight: 700;
+    }
 
-    border-top:
-        1px solid rgba(255,255,255,0.06);
-}
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
 
-/* 手机适配 */
+    .button.primary:hover,
+    .button.primary:focus-visible {
+      background: #9affd9;
+    }
 
-@media (max-width: 700px) {
+    .hero-console {
+      position: relative;
+      min-height: 455px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: linear-gradient(155deg, rgba(17, 26, 36, 0.92), rgba(7, 10, 15, 0.74));
+      box-shadow: var(--shadow), inset 0 1px rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
 
-    nav .links {
+    .hero-console::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      top: -90px;
+      border-radius: 50%;
+      background: rgba(122, 245, 200, 0.08);
+      filter: blur(18px);
+    }
+
+    .console-bar {
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.75rem;
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.42rem;
+    }
+
+    .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #293340;
+    }
+
+    .schema-map {
+      position: relative;
+      height: 285px;
+      margin: 1.5rem;
+      border: 1px solid rgba(141, 185, 255, 0.12);
+      border-radius: 20px;
+      background-image: radial-gradient(rgba(141, 185, 255, 0.18) 1px, transparent 1px);
+      background-size: 18px 18px;
+      overflow: hidden;
+    }
+
+    .schema-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(122, 245, 200, 0), rgba(122, 245, 200, 0.75), rgba(122, 245, 200, 0));
+      transform-origin: left;
+    }
+
+    .line-a {
+      width: 46%;
+      left: 24%;
+      top: 37%;
+      transform: rotate(13deg);
+    }
+
+    .line-b {
+      width: 36%;
+      left: 38%;
+      top: 65%;
+      transform: rotate(-23deg);
+    }
+
+    .line-c {
+      width: 32%;
+      left: 19%;
+      top: 71%;
+      transform: rotate(-72deg);
+    }
+
+    .node {
+      position: absolute;
+      min-width: 88px;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(9, 14, 20, 0.94);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+      color: #b8c5ce;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.7rem;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .node strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+
+    .node.one { left: 10%; top: 18%; }
+    .node.two { right: 9%; top: 31%; animation-delay: -1.7s; }
+    .node.three { left: 36%; bottom: 10%; animation-delay: -3s; }
+
+    .console-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 1.5rem 1.4rem;
+      gap: 0.7rem;
+    }
+
+    .console-meta div {
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .console-meta span,
+    .console-meta strong {
+      display: block;
+    }
+
+    .console-meta span {
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .console-meta strong {
+      margin-top: 0.2rem;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    section {
+      padding: clamp(5rem, 9vw, 8.5rem) 0;
+      scroll-margin-top: 76px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 3rem;
+      align-items: end;
+      margin-bottom: 3rem;
+    }
+
+    .section-index {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      max-width: 600px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 1rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+    }
+
+    .about-main {
+      padding: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .about-main p {
+      max-width: 760px;
+      color: #afbbc4;
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      line-height: 1.75;
+    }
+
+    .about-main p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-main em {
+      color: var(--text);
+      font-style: normal;
+    }
+
+    .about-aside {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .mini-panel {
+      min-height: 142px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mini-panel span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mini-panel strong {
+      font-size: 1.25rem;
+      line-height: 1.25;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .filter-button {
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .filter-button:hover,
+    .filter-button:focus-visible,
+    .filter-button.active {
+      border-color: var(--line-strong);
+      background: rgba(122, 245, 200, 0.07);
+      color: var(--accent);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    .project-card {
+      grid-column: span 4;
+      min-height: 360px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card.featured {
+      grid-column: span 8;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -90px;
+      bottom: -100px;
+      border: 1px solid rgba(122, 245, 200, 0.12);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(122, 245, 200, 0.04);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--line-strong);
+    }
+
+    .project-card[hidden] {
+      display: none;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .project-status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .project-card h3 {
+      margin: auto 0 0.8rem;
+      font-size: clamp(1.7rem, 3vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .project-card p {
+      max-width: 590px;
+      margin-bottom: 1.4rem;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      padding: 0.28rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #aebac3;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.7rem;
+    }
+
+    .project-link {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+    }
+
+    .project-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -4px;
+    }
+
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 1rem;
+    }
+
+    .lab-notes {
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .lab-notes h3 {
+      font-size: 1.6rem;
+      line-height: 1.2;
+    }
+
+    .lab-notes p {
+      color: var(--muted);
+    }
+
+    .query-list {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 2rem;
+    }
+
+    .query-choice {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.018);
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .query-choice:hover,
+    .query-choice:focus-visible,
+    .query-choice.active {
+      border-color: var(--line-strong);
+      background: rgba(122, 245, 200, 0.055);
+      color: var(--text);
+    }
+
+    .query-choice code {
+      color: var(--accent);
+    }
+
+    .sql-window {
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    .sql-editor {
+      padding: 1.5rem;
+      min-height: 160px;
+      border-bottom: 1px solid var(--line);
+      color: #b9c8d1;
+      background: rgba(4, 8, 12, 0.48);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+    }
+
+    .sql-keyword { color: var(--accent-2); }
+    .sql-name { color: var(--warning); }
+    .sql-string { color: var(--accent); }
+
+    .sql-actions {
+      padding: 0.85rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .run-button {
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      background: var(--accent);
+      color: #06130f;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .runtime {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.72rem;
+    }
+
+    .result-wrap {
+      padding: 1.2rem;
+      overflow-x: auto;
+    }
+
+    .result-label {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 0.75rem;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    th,
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      color: #b8c4cc;
+      font-weight: 550;
+    }
+
+    td {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .knowledge-card {
+      min-height: 300px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .knowledge-card .number {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.78rem;
+    }
+
+    .knowledge-card h3 {
+      margin: auto 0 0.8rem;
+      font-size: 1.7rem;
+      line-height: 1.15;
+    }
+
+    .knowledge-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .now-panel {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      overflow: hidden;
+    }
+
+    .now-title {
+      min-height: 430px;
+      padding: clamp(2rem, 5vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(140deg, rgba(122, 245, 200, 0.08), transparent 62%),
+        rgba(9, 14, 20, 0.56);
+    }
+
+    .now-title h2 {
+      margin-bottom: 1rem;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.85;
+      letter-spacing: -0.07em;
+    }
+
+    .now-title p {
+      max-width: 370px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .now-list {
+      padding: clamp(1rem, 3vw, 2.2rem);
+    }
+
+    .now-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .now-item:last-child {
+      border-bottom: 0;
+    }
+
+    .now-item span {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .now-item strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 1.05rem;
+    }
+
+    .now-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .site-footer {
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+      padding-bottom: 3rem;
+    }
+
+    .footer-main h2 {
+      max-width: 700px;
+      margin-bottom: 0;
+      font-size: clamp(2.4rem, 6vw, 5.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .social-links a {
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .social-links a:hover,
+    .social-links a:focus-visible {
+      border-color: var(--line-strong);
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+      color: #71808b;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.72rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .section-head,
+      .about-grid,
+      .lab-layout,
+      .now-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 8rem;
+      }
+
+      .hero-console {
+        min-height: auto;
+      }
+
+      .section-head {
+        gap: 1rem;
+      }
+
+      .project-card,
+      .project-card.featured {
+        grid-column: span 6;
+      }
+
+      .knowledge-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .now-title {
+        min-height: 340px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(calc(100% - 1.5rem), var(--max));
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        position: absolute;
+        left: 0.75rem;
+        right: 0.75rem;
+        top: 68px;
+        padding: 1rem;
         display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(9, 14, 20, 0.98);
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 0.8rem;
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(3.35rem, 18vw, 5rem);
+      }
+
+      .hero-copy {
+        font-size: 1rem;
+      }
+
+      .schema-map {
+        height: 255px;
+        margin: 1rem;
+      }
+
+      .node {
+        min-width: 78px;
+      }
+
+      .console-meta {
+        padding-inline: 1rem;
+      }
+
+      .project-card,
+      .project-card.featured {
+        grid-column: 1 / -1;
+        min-height: 320px;
+      }
+
+      .knowledge-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .now-item {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
     }
 
-    .hero h1 {
-        letter-spacing: -2px;
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
     }
-
-}
-
-</style>
+  </style>
 </head>
-
 <body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
 
-<div class="glow"></div>
+  <header class="site-header" id="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="brand" href="#home" aria-label="返回首页">
+        <span class="brand-mark">H/</span>
+        <span>HEYU.LAB</span>
+      </a>
 
-<nav>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="打开导航菜单">☰</button>
 
-    <div class="logo">
-        HEYU
-    </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">关于</a>
+        <a href="#projects">项目</a>
+        <a href="#playground">实验室</a>
+        <a href="#knowledge">知识库</a>
+        <a href="#now">现在</a>
+      </div>
+    </nav>
+  </header>
 
-    <div class="links">
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#projects">
-            Projects
-        </a>
-
-        <a href="#now">
-            Now
-        </a>
-
-    </div>
-
-</nav>
-
-
-<section class="hero">
-
-    <div class="small-title">
-        PERSONAL SPACE / 2026
-    </div>
-
-    <h1>
-        Hello.
-    </h1>
-
-    <h2>
-        I'm building
-        <span id="changingText">
-            things I find interesting.
-        </span>
-    </h2>
-
-</section>
-
-
-<section id="about">
-
-    <h2 class="section-title">
-        About
-    </h2>
-
-    <div class="now">
-
-        I'm exploring how
-        <strong>
-            technology, design and systems
-        </strong>
-        can make everyday life more interesting.
-
-        <br><br>
-
-        This website is one of those experiments.
-
-    </div>
-
-</section>
-
-
-<section id="projects">
-
-    <h2 class="section-title">
-        Projects
-    </h2>
-
-    <div class="grid">
-
-        <div class="card">
-
-            <div class="number">
-                001
-            </div>
-
-            <h3>
-                Personal Website
-            </h3>
-
-            <p>
-                My own corner of the internet.
-                Designed, built and continuously evolving.
-            </p>
-
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="hero-grid container">
+        <div class="hero-content reveal">
+          <p class="eyebrow"><span class="signal" aria-hidden="true"></span>Digital lab / Online</p>
+          <h1>Ideas into<br><span class="outline-word">systems.</span></h1>
+          <p class="hero-copy">
+            你好，我是 <strong>Heyu</strong>。我在这里研究数据如何被组织、查询和理解，也把 AI 想法做成可以运行的小游戏、工具与数字实验。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">查看实验项目</a>
+            <a class="button" href="#playground">运行一条查询</a>
+          </div>
         </div>
 
+        <aside class="hero-console reveal" aria-label="数据实验室状态面板">
+          <div class="console-bar">
+            <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span>schema.graph / live</span>
+          </div>
+          <div class="schema-map" aria-label="项目、知识和实验之间的关系示意图">
+            <span class="schema-line line-a" aria-hidden="true"></span>
+            <span class="schema-line line-b" aria-hidden="true"></span>
+            <span class="schema-line line-c" aria-hidden="true"></span>
+            <div class="node one"><strong>projects</strong>ai / games</div>
+            <div class="node two"><strong>knowledge</strong>db / notes</div>
+            <div class="node three"><strong>lab</strong>ideas / tests</div>
+          </div>
+          <div class="console-meta">
+            <div><span>Mode</span><strong>BUILDING</strong></div>
+            <div><span>Focus</span><strong>DATABASE</strong></div>
+            <div><span>Since</span><strong>2026</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <div class="card">
-
-            <div class="number">
-                002
-            </div>
-
-            <h3>
-                Room System
-            </h3>
-
-            <p>
-                Exploring lighting,
-                devices, workspace design
-                and smart home automation.
-            </p>
-
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-index">01 / ABOUT</span>
+            <h2>不只是一个<br>在线简历。</h2>
+          </div>
+          <p>这是我的数字工作台：记录认真研究过的问题，也保存那些看起来有点奇怪、但值得做出来的想法。</p>
         </div>
 
+        <div class="about-grid">
+          <article class="about-main panel reveal">
+            <p>我对数据库、AI 和创造型编程感兴趣。我喜欢把一个抽象问题拆成结构、关系与规则，再把它做成一个<em>真正可以体验的东西</em>。</p>
+            <p>这里会逐渐长出数据库笔记、AI 辅助创作、小游戏、交互实验，以及我在学习过程中留下的判断和失败。</p>
+          </article>
+          <div class="about-aside">
+            <article class="mini-panel panel reveal">
+              <span>Current direction</span>
+              <strong>数据库 × AI<br>× 交互体验</strong>
+            </article>
+            <article class="mini-panel panel reveal">
+              <span>Principle</span>
+              <strong>Build first.<br>Explain clearly.</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <div class="card">
-
-            <div class="number">
-                003
-            </div>
-
-            <h3>
-                Future Lab
-            </h3>
-
-            <p>
-                Servers, AI,
-                automation and whatever
-                I decide to build next.
-            </p>
-
+    <section id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-index">02 / PROJECTS</span>
+            <h2>正在生长的<br>作品。</h2>
+          </div>
+          <p>第一版先用概念项目建立结构。以后你只需要替换名称、介绍和链接，就能把真实作品放进来。</p>
         </div>
 
+        <div class="filters reveal" role="group" aria-label="筛选项目">
+          <button class="filter-button active" type="button" data-filter="all">全部</button>
+          <button class="filter-button" type="button" data-filter="ai">AI</button>
+          <button class="filter-button" type="button" data-filter="game">游戏</button>
+          <button class="filter-button" type="button" data-filter="data">数据</button>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card featured panel reveal" data-category="data ai">
+            <div class="project-top"><span>001 / DATA TOOL</span><span class="project-status">概念原型</span></div>
+            <h3>SQL Lens</h3>
+            <p>把一条 SQL 查询变成可观察的数据流：从扫描、过滤、连接到聚合，让执行过程不再只是黑盒。</p>
+            <div class="tags"><span class="tag">SQL</span><span class="tag">Visualization</span><span class="tag">AI Explain</span></div>
+            <a class="project-link" href="#playground" aria-label="查看 SQL Lens 概念实验"></a>
+          </article>
+
+          <article class="project-card panel reveal" data-category="game ai">
+            <div class="project-top"><span>002 / AI GAME</span><span class="project-status">准备中</span></div>
+            <h3>Echo Maze</h3>
+            <p>一个会根据玩家选择改变规则与叙事的小型 AI 迷宫。</p>
+            <div class="tags"><span class="tag">Game</span><span class="tag">Generative AI</span></div>
+            <a class="project-link" href="#now" aria-label="查看 Echo Maze 项目状态"></a>
+          </article>
+
+          <article class="project-card panel reveal" data-category="data">
+            <div class="project-top"><span>003 / DATABASE</span><span class="project-status">研究中</span></div>
+            <h3>Index Lab</h3>
+            <p>用交互动画观察 B+ Tree 如何插入、分裂，以及索引为何能改变查询速度。</p>
+            <div class="tags"><span class="tag">B+ Tree</span><span class="tag">Database</span></div>
+            <a class="project-link" href="#knowledge" aria-label="查看 Index Lab 相关知识方向"></a>
+          </article>
+
+          <article class="project-card featured panel reveal" data-category="ai">
+            <div class="project-top"><span>004 / KNOWLEDGE</span><span class="project-status">设计中</span></div>
+            <h3>Prompt Atlas</h3>
+            <p>不是提示词清单，而是一张关于任务、上下文、约束与结果质量之间关系的可探索地图。</p>
+            <div class="tags"><span class="tag">AI</span><span class="tag">Knowledge Graph</span><span class="tag">Experiment</span></div>
+            <a class="project-link" href="#now" aria-label="查看 Prompt Atlas 项目状态"></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="playground">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-index">03 / PLAYGROUND</span>
+            <h2>别只阅读，<br>亲手运行。</h2>
+          </div>
+          <p>这是一个轻量交互演示。选择查询并点击运行，看看数据怎样回答不同的问题。</p>
+        </div>
+
+        <div class="lab-layout">
+          <aside class="lab-notes panel reveal">
+            <span class="section-index">QUERY COLLECTION</span>
+            <h3>选择一个问题</h3>
+            <p>当前演示使用页面内的样本结果。以后可以接入 DuckDB-Wasm，让 SQL 真正在浏览器里执行。</p>
+            <div class="query-list">
+              <button class="query-choice active" type="button" data-query="projects"><span>最近的项目</span><code>01</code></button>
+              <button class="query-choice" type="button" data-query="topics"><span>研究方向</span><code>02</code></button>
+              <button class="query-choice" type="button" data-query="ideas"><span>待实现想法</span><code>03</code></button>
+            </div>
+          </aside>
+
+          <div class="sql-window panel reveal">
+            <div class="console-bar">
+              <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span>playground.sql</span>
+            </div>
+            <div class="sql-editor" id="sql-editor" aria-live="polite"></div>
+            <div class="sql-actions">
+              <span class="runtime" id="runtime">ready / waiting</span>
+              <button class="run-button" id="run-query" type="button">运行查询</button>
+            </div>
+            <div class="result-wrap" id="result-wrap">
+              <span class="result-label">Result preview</span>
+              <table>
+                <thead id="result-head"></thead>
+                <tbody id="result-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="knowledge">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-index">04 / KNOWLEDGE</span>
+            <h2>知识不是列表，<br>而是网络。</h2>
+          </div>
+          <p>未来的每一篇内容都应该连接概念、实验与项目，让知识库逐渐变成可以探索的个人数据库。</p>
+        </div>
+
+        <div class="knowledge-grid">
+          <article class="knowledge-card panel reveal">
+            <span class="number">K / 01</span>
+            <h3>数据库基础</h3>
+            <p>数据模型、SQL、索引、事务，以及它们背后的设计取舍。</p>
+          </article>
+          <article class="knowledge-card panel reveal">
+            <span class="number">K / 02</span>
+            <h3>系统与性能</h3>
+            <p>查询优化、存储结构、缓存、并发控制与可观测性。</p>
+          </article>
+          <article class="knowledge-card panel reveal">
+            <span class="number">K / 03</span>
+            <h3>AI 创作实验</h3>
+            <p>如何与 AI 协作完成游戏、网站、工具，以及哪些方法真正有效。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="now">
+      <div class="container">
+        <div class="now-panel panel reveal">
+          <div class="now-title">
+            <div>
+              <span class="section-index">05 / NOW</span>
+              <h2>Now.</h2>
+            </div>
+            <p>一张不会假装“全部完成”的页面。记录此刻正在学习、构建和思考的事情。</p>
+          </div>
+          <div class="now-list">
+            <article class="now-item">
+              <span>Learning</span>
+              <div><strong>数据库系统与 SQL</strong><p>整理基础概念，并尝试用交互方式解释抽象结构。</p></div>
+            </article>
+            <article class="now-item">
+              <span>Building</span>
+              <div><strong>Heyu’s Digital Lab</strong><p>让这个网站从主页逐渐成长为知识库和实验集合。</p></div>
+            </article>
+            <article class="now-item">
+              <span>Exploring</span>
+              <div><strong>AI 原生小游戏</strong><p>寻找 AI 不只是生成内容，而是参与游戏机制的方法。</p></div>
+            </article>
+            <article class="now-item">
+              <span>Updated</span>
+              <div><strong>2026 · 秋</strong><p>网站第一版结构完成，真实项目将逐步替换概念内容。</p></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <h2>有趣的东西，应该被做出来。</h2>
+        <div class="social-links" aria-label="社交链接">
+          <a href="https://github.com/heyu222" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="#home">Back to top</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> HEYU / DIGITAL LAB</span>
+        <span>BUILT WITH CURIOSITY + CODE</span>
+      </div>
     </div>
+  </footer>
 
-</section>
+  <script>
+    const header = document.querySelector('#site-header');
+    const menuButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('#nav-links');
 
+    const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 18);
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
 
-<section id="now">
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? '关闭导航菜单' : '打开导航菜单');
+    });
 
-    <h2 class="section-title">
-        Now
-    </h2>
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
 
-    <div class="now">
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-        Currently learning
-        <strong>
-            web development
-        </strong>,
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
-        exploring
-        <strong>
-            home servers
-        </strong>,
+    const filters = document.querySelectorAll('.filter-button');
+    const projectCards = document.querySelectorAll('.project-card');
 
-        and building my own
-        <strong>
-            digital space.
-        </strong>
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        filters.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.dataset.filter;
 
-    </div>
+        projectCards.forEach((card) => {
+          const categories = card.dataset.category.split(' ');
+          card.hidden = filter !== 'all' && !categories.includes(filter);
+        });
+      });
+    });
 
-</section>
+    const queryData = {
+      projects: {
+        sql: '<span class="sql-keyword">SELECT</span> name, type, status\n<span class="sql-keyword">FROM</span> <span class="sql-name">projects</span>\n<span class="sql-keyword">ORDER BY</span> updated_at <span class="sql-keyword">DESC</span>\n<span class="sql-keyword">LIMIT</span> 3;',
+        headers: ['name', 'type', 'status'],
+        rows: [
+          ['SQL Lens', 'data tool', 'prototype'],
+          ['Echo Maze', 'ai game', 'planned'],
+          ['Index Lab', 'visual lab', 'research']
+        ],
+        time: '12 ms / 3 rows'
+      },
+      topics: {
+        sql: '<span class="sql-keyword">SELECT</span> topic, COUNT(*) <span class="sql-keyword">AS</span> notes\n<span class="sql-keyword">FROM</span> <span class="sql-name">knowledge</span>\n<span class="sql-keyword">GROUP BY</span> topic\n<span class="sql-keyword">ORDER BY</span> notes <span class="sql-keyword">DESC</span>;',
+        headers: ['topic', 'notes'],
+        rows: [
+          ['database systems', '18'],
+          ['ai experiments', '11'],
+          ['creative coding', '7']
+        ],
+        time: '8 ms / 3 rows'
+      },
+      ideas: {
+        sql: '<span class="sql-keyword">SELECT</span> idea, priority\n<span class="sql-keyword">FROM</span> <span class="sql-name">ideas</span>\n<span class="sql-keyword">WHERE</span> status = <span class="sql-string">\'not_built_yet\'</span>\n<span class="sql-keyword">ORDER BY</span> priority <span class="sql-keyword">DESC</span>;',
+        headers: ['idea', 'priority'],
+        rows: [
+          ['B+ Tree visualizer', 'high'],
+          ['browser SQL notebook', 'high'],
+          ['AI narrative engine', 'medium']
+        ],
+        time: '10 ms / 3 rows'
+      }
+    };
 
+    let activeQuery = 'projects';
+    const editor = document.querySelector('#sql-editor');
+    const resultHead = document.querySelector('#result-head');
+    const resultBody = document.querySelector('#result-body');
+    const runtime = document.querySelector('#runtime');
+    const runButton = document.querySelector('#run-query');
+    const queryButtons = document.querySelectorAll('.query-choice');
 
-<footer>
+    function renderQuery(showResults = true) {
+      const data = queryData[activeQuery];
+      editor.innerHTML = data.sql;
 
-    © 2026 HEYU
+      if (!showResults) {
+        resultHead.innerHTML = '';
+        resultBody.innerHTML = '<tr><td>点击“运行查询”查看结果</td></tr>';
+        runtime.textContent = 'ready / waiting';
+        return;
+      }
 
-    <br><br>
-
-    Built somewhere on the Internet.
-
-</footer>
-
-
-<script>
-
-const texts = [
-
-    "things I find interesting.",
-
-    "my own corner of the internet.",
-
-    "systems for everyday life.",
-
-    "whatever comes next."
-
-];
-
-let index = 0;
-
-const element =
-    document.getElementById("changingText");
-
-setInterval(() => {
-
-    index++;
-
-    if (index >= texts.length) {
-        index = 0;
+      resultHead.innerHTML = `<tr>${data.headers.map((headerName) => `<th>${headerName}</th>`).join('')}</tr>`;
+      resultBody.innerHTML = data.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('');
+      runtime.textContent = data.time;
     }
 
-    element.style.opacity = 0;
+    queryButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        queryButtons.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        activeQuery = button.dataset.query;
+        renderQuery(false);
+      });
+    });
 
-    setTimeout(() => {
+    runButton.addEventListener('click', () => {
+      runButton.disabled = true;
+      runButton.textContent = '执行中…';
+      runtime.textContent = 'running query…';
 
-        element.textContent =
-            texts[index];
+      window.setTimeout(() => {
+        renderQuery(true);
+        runButton.disabled = false;
+        runButton.textContent = '运行查询';
+      }, 420);
+    });
 
-        element.style.opacity = 1;
-
-    },300);
-
-},3000);
-
-element.style.transition =
-    "opacity 0.3s";
-
-</script>
-
+    renderQuery(true);
+    document.querySelector('#year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
